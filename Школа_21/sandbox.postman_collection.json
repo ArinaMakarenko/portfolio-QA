@@ -1,0 +1,308 @@
+{
+  "info": {
+    "_postman_id": "e0293d48-7060-4b7b-80e8-5007ef78b12c",
+    "name": "QA 7 API 01",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33435245"
+  },
+  "item": [
+    {
+      "name": "Получить список всех сущностей",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/mythology",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "mythology"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Регистрация нового пользователя",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"hercules_01\",\r\n  \"password\": \"12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Вход и получение токена",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();\r",
+              "pm.environment.set(\"my_token\", jsonData.token);\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"hercules_01\",\r\n  \"password\": \"12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Призвать новую сущность",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();\r",
+              "pm.environment.set(\"myth_id\", jsonData.id);\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Посейдон\",\r\n  \"category\": \"gods\",\r\n  \"desc\": \"Бог морей и землетрясений.\",\r\n  \"img\": \"https://images.unsplash.com/photo-1503152394-c571994fd383\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/mythology",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "mythology"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить одну сущность по ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/mythology/3",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "mythology",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Полное обновление сущности",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 39,\r\n  \"name\": \"Зевс\",\r\n  \"category\": \"gods\",\r\n  \"desc\": \"Бог грома и молний, верховный правитель Олимпа.\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/mythology/{{myth_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "mythology",
+            "{{myth_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Частичное обновление сущности",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"desc\": \"Самый главный бог на Олимпе. С ним шутки плохи!\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/mythology/{{myth_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "mythology",
+            "{{myth_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Изгнание сущности",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/mythology/{{myth_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "mythology",
+            "{{myth_id}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{my_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_secret_02hz",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_02hz",
+      "secret": true
+    },
+    {
+      "key": "my_token",
+      "secret": true
+    },
+    {
+      "key": "base_url",
+      "value": "https://api.qasandbox.org/api"
+    }
+  ]
+}
